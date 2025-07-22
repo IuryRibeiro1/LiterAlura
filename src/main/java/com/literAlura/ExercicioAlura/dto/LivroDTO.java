@@ -14,12 +14,33 @@ public class LivroDTO {
     public String titulo;
     @JsonAlias("authors")
     public List<AutorLivros> autor;
+    @JsonAlias("languages")
+    public List<String> idioma;
+    @JsonAlias("download_count")
+    public Integer downloads;
 
-
-    public LivroDTO(Integer id, String titulo, List<AutorLivros> autor) {
+    public LivroDTO(Integer id, String titulo, List<AutorLivros> autor, List<String> idioma, Integer downloads) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
+        this.idioma = idioma;
+        this.downloads = downloads;
+    }
+
+    public List<String> getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(List<String> idioma) {
+        this.idioma = idioma;
+    }
+
+    public Integer getDownloads() {
+        return downloads;
+    }
+
+    public void setDownloads(Integer downloads) {
+        this.downloads = downloads;
     }
 
     public LivroDTO(){
@@ -53,8 +74,9 @@ public class LivroDTO {
     @Override
     public String toString() {
         return
-                "id=" + id +
                 ", titulo='" + titulo + '\'' +
-                ", autor='" + autor;
+                ", autor=" + autor +
+                ", idioma=" + idioma +
+                ", downloads=" + downloads;
     }
 }
