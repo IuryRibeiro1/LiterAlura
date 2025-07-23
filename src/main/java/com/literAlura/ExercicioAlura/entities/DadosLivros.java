@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DadosLivros(@JsonAlias("results") List<LivroDTO> dados) {
+public record DadosLivros(@JsonAlias("results")List<LivroDTO> dados) {
 
 }

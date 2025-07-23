@@ -74,9 +74,9 @@ public class LivroDTO {
     @Override
     public String toString() {
         return
-                ", titulo='" + titulo + '\'' +
-                ", autor=" + autor +
-                ", idioma=" + idioma +
-                ", downloads=" + downloads;
+                "\nTitulo: "+ titulo +
+                "\nAutor: " + autor +
+                "\nIdioma: " + idioma +
+                "\nNúmero de downloads: " + downloads;
     }
 }

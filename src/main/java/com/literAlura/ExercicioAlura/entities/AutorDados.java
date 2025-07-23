@@ -7,5 +7,5 @@ import com.literAlura.ExercicioAlura.dto.AutorDTO;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AutorLivros(@JsonAlias("name")String nome, @JsonAlias("birth_year") String nascimento, @JsonAlias("death_year") String falecimento) {
+public record AutorDados(@JsonAlias("results") List<AutorDTO> dados) {
 }

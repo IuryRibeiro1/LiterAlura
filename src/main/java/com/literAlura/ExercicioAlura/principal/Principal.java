@@ -1,11 +1,15 @@
 package com.literAlura.ExercicioAlura.principal;
 
 import com.literAlura.ExercicioAlura.dto.LivroDTO;
+import com.literAlura.ExercicioAlura.entities.AutorLivros;
 import com.literAlura.ExercicioAlura.entities.DadosLivros;
 import com.literAlura.ExercicioAlura.service.ConverteDados;
 import com.literAlura.ExercicioAlura.service.LivroService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -13,6 +17,12 @@ public class Principal {
     ConverteDados converteDados = new ConverteDados();
 
     LivroService livroService = new LivroService();
+
+    List<LivroDTO> livroDTO = new ArrayList<>();
+    
+
+    List<AutorLivros> autorDTO = new ArrayList<AutorLivros>();
+
 
     int opcao = 1;
 
@@ -25,17 +35,24 @@ public class Principal {
             System.out.println("MENU: " +
                     "\n1: Buscar livro pelo título ou autor" +
                     "\n2: Listar livros registrados" +
-                    "\n3: Listar autores registrados" +
-                    "\n4: buscar livros pelo idioma");
+                    "\n3: Listar autores buscados" +
+                    "\n4: Buscar autores por ano determinado");
 
 
             int escolha = sc.nextInt();
 
             if (escolha == 1) {
-                buscarLivroPeloTitulo();
-            } else if (escolha == 2) {
-                System.out.println("Vc é zicado");
-            } else {
+                buscarLivros();
+            }else if(escolha ==2){
+                listarLivrosBuscados();
+            }
+            else if (escolha == 3) {
+                listarAutoresBuscados();
+            }
+            else if(escolha ==4){
+                listarAutoresPorDeterminadoAno();
+            }
+            else {
                 opcao = 0;
 
             }
@@ -43,15 +60,43 @@ public class Principal {
         }
 
     }
-            public void buscarLivroPeloTitulo () {
+
+
+    private DadosLivros buscarLivroPeloTitulo () {
                 System.out.println("Insira o título do livro desejado");
                 sc.next();
                 String nomeLivro = sc.nextLine();
-                var json = livroService.obterDados(ENDERECO + "?search=" + nomeLivro.replace(" " , "+"));
-
+                var json = livroService.obterDados(ENDERECO + "?search=" + nomeLivro.replace(" " , "%20"));
                 DadosLivros dadosLivros = converteDados.obterDados(json, DadosLivros.class);
-                System.out.println(dadosLivros);
 
-            }
+                System.out.println(dadosLivros.dados().get(0));
 
-        }
+        return dadosLivros;
+    }
+
+    private void buscarLivros() {
+        DadosLivros livrosFiltrados = buscarLivroPeloTitulo();
+        livroDTO.add(livrosFiltrados.dados().get(0));
+
+
+    }
+
+    private void listarLivrosBuscados(){
+        livroDTO.forEach(System.out::println);
+    }
+
+
+    private void listarAutoresBuscados() {
+        System.out.println("Autores já buscados: ");
+         autorDTO = livroDTO.stream()
+                 .map(a -> a.getAutor().get(0))
+                 .collect(Collectors.toList()).reversed();
+
+         autorDTO.forEach(System.out::println);
+
+    }
+
+    private void listarAutoresPorDeterminadoAno() {
+    }
+
+}
