@@ -97,6 +97,15 @@ public class Principal {
     }
 
     private void listarAutoresPorDeterminadoAno() {
+        System.out.println("Insira uma data para buscar algum autor: ");
+        Integer ano = sc.nextInt();
+        autorDTO = livroDTO.stream()
+                .map(a -> a.getAutor().get(0))
+                .filter(a -> ano > a.nascimento() && ano < a.falecimento())
+                .collect(Collectors.toList()).reversed();
+
+        autorDTO.forEach(System.out::println);
+
     }
 
 }
